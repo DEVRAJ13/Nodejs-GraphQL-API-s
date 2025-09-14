@@ -2,14 +2,12 @@ import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
 import  router  from './routers/router.js';
 import { connectDB } from "./database/database.js";
 import { typeDefs } from './graphql/schema.js';
 import { resolvers } from './graphql/resolvers.js';
 import { verifyToken } from "./util/util.js";
-
-
-dotenv.config();
 const app = express();
 app.use(cors({
   origin: "http://localhost:5173",
@@ -19,8 +17,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(router);
-
-
 try {
   const server = new ApolloServer({
     typeDefs,
@@ -31,7 +27,6 @@ try {
       return { userId };
     },
   });
-
   await server.start();
   await connectDB();
   console.log("Database synchronized");
