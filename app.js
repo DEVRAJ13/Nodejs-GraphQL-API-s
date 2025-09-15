@@ -43,7 +43,7 @@ try {
   console.log("Database synchronized");
   server.applyMiddleware({ app, path: "/graphql" });
   const port = process.env.PORT || 4000;
-  app.listen(port, () => console.log(`🚀 Server running at http://localhost:${port}${server.graphqlPath}`));
+  app.listen(port, () => console.log(`Server running at http://localhost:${port}${server.graphqlPath}`));
 } catch (error) {
   console.error("Server start error:", error);
 }
