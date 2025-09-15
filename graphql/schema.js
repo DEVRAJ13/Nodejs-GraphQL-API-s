@@ -11,7 +11,7 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    getUserDocs(userId: ID!): [File!]!
+   getUserDocs(userId: ID!, offset: Int, limit: Int): [File]
   }
 
   type Mutation {

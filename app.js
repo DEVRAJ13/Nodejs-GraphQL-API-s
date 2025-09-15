@@ -22,15 +22,21 @@ app.use(router);
 
 
 try {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: async ({ req }) => {
-      const token = req.headers.authorization?.split(" ")[1];
-      const userId = await verifyToken(token);
-      return { userId };
-    },
-  });
+ const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return { user: null };
+
+    try {
+      const userId = await verifyToken(token); // this should return user id
+      return { user: { id: userId } }; // <-- pass as `user`
+    } catch (err) {
+      return { user: null };
+    }
+  },
+});
 
   await server.start();
   await connectDB();
